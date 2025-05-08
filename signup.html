@@ -1,25 +1,55 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up - Instaniach</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instaniach - إنشاء حساب</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body class="signup-page">
   <div class="auth-container">
-    <img src="logo.png" alt="Instaniach Logo" class="app-logo">
-
-    <h2>Sign Up</h2>
-    <input type="text" id="signup-username" placeholder="Username" required>
-    <input type="password" id="signup-password" placeholder="Password" required>
-    <button onclick="signup()">Create Account</button>
-
-    <p>Already have an account?
-      <a href="index.html">Sign In</a>
-    </p>
+    <img src="logo.png" alt="Logo" class="app-logo" />
+    <h2>إنشاء حساب</h2>
+    <input type="text" id="username" placeholder="اسم المستخدم" />
+    <input type="password" id="password" placeholder="كلمة المرور" />
+    <input type="number" id="age" placeholder="العمر" />
+    <input type="text" id="city" placeholder="المدينة" />
+    <button onclick="signup()">سجل الآن</button>
+    <p><a href="login.html">لديك حساب؟ سجل الدخول</a></p>
   </div>
 
-  <script src="app.js"></script>
+  <script>
+    function signup() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const age = document.getElementById("age").value.trim();
+      const city = document.getElementById("city").value.trim();
+
+      if (!username || !password || !age || !city) {
+        alert("يرجى ملء كل الحقول");
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      if (users.find(u => u.username === username)) {
+        alert("اسم المستخدم موجود مسبقاً");
+        return;
+      }
+
+      const newUser = { username, password, age, city };
+      users.push(newUser);
+      localStorage.setItem("users", JSON.stringify(users));
+      localStorage.setItem("loggedInUser", JSON.stringify(newUser));
+      window.location.href = "index.html";
+    }
+
+    // يمنع إعادة التسجيل إذا كان مسجل مسبقًا
+    window.onload = () => {
+      const loggedInUser = localStorage.getItem("loggedInUser");
+      if (loggedInUser) {
+        window.location.href = "index.html";
+      }
+    }
+  </script>
 </body>
 </html>
