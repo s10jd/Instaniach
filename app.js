@@ -1,23 +1,56 @@
-document.addEventListener("DOMContentLoaded", function () { const loginForm = document.getElementById("login-form"); const signupForm = document.getElementById("signup-form");
+// التأكد من وجود مستخدم مسجل دخوله مسبقاً
+document.addEventListener('DOMContentLoaded', () => {
+  const currentUser = localStorage.getItem('currentUser');
+  if (currentUser && window.location.pathname.endsWith('index.html')) {
+    window.location.href = 'chat.html'; // يدخل للدردشة مباشرة
+  }
+});
 
-const usernameInput = document.getElementById("username"); const passwordInput = document.getElementById("password"); const signupUsername = document.getElementById("signup-username"); const signupPassword = document.getElementById("signup-password");
+// تسجيل الدخول
+function login() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-// تحقق إذا كان المستخدم مسجل دخوله مسبقًا if (localStorage.getItem("loggedIn") === "true") { window.location.href = "chat.html"; }
+  const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
 
-// تسجيل الدخول if (loginForm) { loginForm.addEventListener("submit", function (e) { e.preventDefault(); const storedUser = localStorage.getItem("user"); const storedPass = localStorage.getItem("pass");
+  const user = savedUsers.find(u => u.username === username && u.password === password);
 
-if (
-    usernameInput.value === storedUser &&
-    passwordInput.value === storedPass
-  ) {
-    localStorage.setItem("loggedIn", "true");
+  if (user) {
+    localStorage.setItem("currentUser", JSON.stringify(user));
     window.location.href = "chat.html";
   } else {
     alert("اسم المستخدم أو كلمة المرور غير صحيحة");
   }
-});
-
 }
 
-// تسجيل حساب جديد if (signupForm) { signupForm.addEventListener("submit", function (e) { e.preventDefault(); localStorage.setItem("user", signupUsername.value); localStorage.setItem("pass", signupPassword.value); localStorage.setItem("loggedIn", "true"); window.location.href = "chat.html"; }); } });
+// الانتقال إلى صفحة التسجيل
+function goToSignup() {
+  window.location.href = "signup.html";
+}
 
+// إنشاء حساب جديد
+function signup() {
+  const username = document.getElementById("signup-username").value.trim();
+  const password = document.getElementById("signup-password").value.trim();
+
+  if (!username || !password) {
+    alert("الرجاء إدخال اسم مستخدم وكلمة مرور");
+    return;
+  }
+
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+
+  const userExists = users.some(u => u.username === username);
+
+  if (userExists) {
+    alert("اسم المستخدم مأخوذ مسبقاً");
+    return;
+  }
+
+  const newUser = { username, password };
+  users.push(newUser);
+  localStorage.setItem("users", JSON.stringify(users));
+  localStorage.setItem("currentUser", JSON.stringify(newUser));
+
+  window.location.href = "chat.html";
+}
