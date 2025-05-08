@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Videos</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background-color: #1a1a2e;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      background: #222;
+    }
+    .video-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 1rem;
+    }
+    .video-card {
+      background: #2a2a40;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      padding: 1rem;
+    }
+    .video-card video {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+    .actions button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .comments {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .post-video {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background: #6c63ff;
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background: #222;
+      padding: 0.5rem 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>Video Feed</header>
+
+  <div class="video-container">
+    <div class="video-card">
+      <video src="video1.mp4" controls></video>
+      <div class="actions">
+        <button onclick="like(this)">❤️ <span>10</span></button>
+        <button onclick="comment(this)">💬 <span>2</span></button>
+      </div>
+      <div class="comments">
+        <p><strong>User1:</strong> Nice!</p>
+        <p><strong>User2:</strong> Cool video.</p>
+      </div>
+    </div>
+    <!-- More video cards can go here -->
+  </div>
+
+  <button class="post-video">+</button>
+
+  <nav>
+    <a href="chat.html">Chat</a>
+    <a href="videos.html">Videos</a>
+    <a href="profile.html">Profile</a>
+  </nav>
+
+  <script>
+    function like(btn) {
+      const span = btn.querySelector('span');
+      span.textContent = parseInt(span.textContent) + 1;
+    }
+    function comment(btn) {
+      const span = btn.querySelector('span');
+      const text = prompt("Write your comment:");
+      if (text) {
+        const commentBox = btn.closest('.video-card').querySelector('.comments');
+        const p = document.createElement('p');
+        p.innerHTML = `<strong>You:</strong> ${text}`;
+        commentBox.appendChild(p);
+        span.textContent = parseInt(span.textContent) + 1;
+      }
+    }
+  </script>
+</body>
+</html>
