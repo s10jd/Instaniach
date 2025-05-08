@@ -1,78 +1,36 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #1e1b2e;
-  color: white;
-  text-align: center;
-}
+<!DOCTYPE html><html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instaniach</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <!-- واجهة تسجيل الدخول -->
+  <div id="login-page" class="page">
+    <img src="logo.png" alt="logo" class="logo">
+    <h2>Sign In</h2>
+    <input type="text" id="username" placeholder="Nickname">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p>Don't have an account? <span onclick="showSignup()" class="link">Sign up</span></p>
+  </div>  <!-- واجهة إنشاء حساب -->  <div id="signup-page" class="page hidden">
+    <h2>Sign Up</h2>
+    <input type="text" id="new-username" placeholder="Nickname">
+    <input type="password" id="new-password" placeholder="Password">
+    <input type="number" id="age" placeholder="Age">
+    <input type="text" id="city" placeholder="City">
+    <button onclick="signup()">Create Account</button>
+    <p>Already have an account? <span onclick="showLogin()" class="link">Login</span></p>
+  </div>  <!-- الواجهة الرئيسية بعد تسجيل الدخول -->  <div id="main-app" class="hidden">
+    <iframe src="chat.html" id="main-frame" frameborder="0"></iframe><div class="bottom-nav">
+  <a href="chat.html" target="main-frame"><img src="icons/chat.svg" alt="Chat"></a>
+  <a href="users.html" target="main-frame"><img src="icons/users.svg" alt="Users"></a>
+  <a href="videos.html" target="main-frame"><img src="icons/videos.svg" alt="Videos"></a>
+  <a href="profile.html" target="main-frame"><img src="icons/settings.svg" alt="Settings"></a>
+</div>
 
-.screen {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.hidden {
-  display: none;
-}
-
-input {
-  margin: 10px 0;
-  padding: 12px;
-  width: 80%;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-button {
-  padding: 12px 24px;
-  background-color: #8e44ad;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-size: 16px;
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #732d91;
-}
-
-.link {
-  margin-top: 15px;
-  color: #a29bfe;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.logo {
-  width: 100px;
-  margin-bottom: 20px;
-}
-
-#navbar {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  background-color: #2c2c54;
-  padding: 10px 0;
-  border-top: 1px solid #444;
-}
-
-#navbar button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 22px;
-}
-
-.page {
-  padding-bottom: 80px;
-}
+  </div>
+</body>
+</html>
