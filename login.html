@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instaniach - تسجيل الدخول</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="signup-page">
+  <div class="auth-container">
+    <img src="logo.png" alt="Logo" class="app-logo" />
+    <h2>تسجيل الدخول</h2>
+    <input type="text" id="username" placeholder="اسم المستخدم" />
+    <input type="password" id="password" placeholder="كلمة المرور" />
+    <button onclick="login()">تسجيل الدخول</button>
+    <p><a href="signup.html">ليس لديك حساب؟ سجل الآن</a></p>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!username || !password) {
+        alert("يرجى ملء كل الحقول");
+        return;
+      }
+
+      const storedUsers = JSON.parse(localStorage.getItem("users") || "[]");
+      const user = storedUsers.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        localStorage.setItem("loggedInUser", JSON.stringify(user));
+        window.location.href = "index.html";
+      } else {
+        alert("معلومات الدخول غير صحيحة");
+      }
+    }
+
+    // يمنع إعادة تسجيل الدخول إذا كان مسجل مسبقًا
+    window.onload = () => {
+      const loggedInUser = localStorage.getItem("loggedInUser");
+      if (loggedInUser) {
+        window.location.href = "index.html";
+      }
+    }
+  </script>
+</body>
+</html>
